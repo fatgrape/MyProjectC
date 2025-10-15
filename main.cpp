@@ -157,10 +157,38 @@ void add_product() {
     printf("\nProduct '%s' (ID: %d) added successfully.\n Tap 'Enter' to return to menu\n", new_product.name, new_product.id);
 }
 
-
+//---DELETE PRODUCT---
+void delete_product() {
+    int del_id;
+    printf("\nEnter Product ID to remove: ");
+    if (scanf_s("%d", &del_id) != 1) {
+        printf("\nInvalid input. Please enter a valid Product ID.\n");
+        while (getchar() != '\n');
+        return;
+    }
+    // Find product by ID
+    int found_index = -1;
+    for (int i = 0; i < product_count; i++) {
+        if (catalog[i].id == del_id) {
+            found_index = i;
+            break;
+        }
+    }
+    if (found_index == -1) {
+        printf("\nProduct with ID %d not found.\n", del_id);
+        return;
+    }
+    // Shift products to remove the found product
+    for (int i = found_index; i < product_count - 1; i++) {
+        catalog[i] = catalog[i + 1];
+    }
+    product_count--;
+    // Save the updated catalog
+    save_products();
+    printf("\nProduct with ID %d removed successfully.\n", del_id);
+}
 
 //---VIEW PRODUCTS---
-
 void view_products() {
     if (product_count == 0) {
         printf("\nProduct catalog is empty.\n");
@@ -204,7 +232,7 @@ void admin_menu() {
 
         switch (choice) {
         case 1: add_product(); break;
-        case 2: printf("Selected: Remove product \n"); break;
+        case 2: delete_product(); break;
         case 3: printf("Selected: View all orders \n"); break;
         case 4: 
             printf("Returning to main menu...\n");

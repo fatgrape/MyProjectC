@@ -3,7 +3,8 @@
 #include <string.h>
 #include "menu.h" 
 
-//---Product Structure---
+
+//---PRODUCT STRUCTURE---
 typedef struct {
     int id;
     char name[50];
@@ -21,8 +22,8 @@ typedef struct {
 Product catalog[MAX_PRODUCTS];
 int product_count = 0;
 
-//---SAVE AND LOAD PRODUCTS---
 
+//---SAVE AND LOAD PRODUCTS---
 void save_products() {
     
     FILE* file;
@@ -49,7 +50,7 @@ void save_products() {
 
 
 
-
+//---LOAD PRODUCTS---
 void load_products() {
     FILE* file;
 	//Open file for reading
@@ -97,6 +98,8 @@ int get_next_product_id() {
     }
     return max_id + 1;
 }
+
+
 //---ADD PRODUCT---
 void add_product() {
     if (product_count >= MAX_PRODUCTS) {
@@ -144,11 +147,12 @@ void add_product() {
     // Clear remaining input before next operation
     while (getchar() != '\n');
 
-    // 5. Add to catalog and save
+    // Add to catalog and save
     catalog[product_count] = new_product;
     product_count++;
 
-    save_products(); // Save the updated catalog
+    // Save the updated catalog
+    save_products(); 
 
     printf("\nProduct '%s' (ID: %d) added successfully.\n Tap 'Enter' to return to menu\n", new_product.name, new_product.id);
 }
@@ -179,17 +183,16 @@ void view_products() {
 }
 
 
-// --- STUB FUNCTIONS FOR SUBMENUS ---
-
+//--- ADMINISTRATOR MENU ---
 void admin_menu() {
     int choice;
     int running = 1;
 
     while (running) {
         printf("\n--- ADMINISTRATOR MENU ---\n");
-        printf("1. Add product (STUB)\n");
-        printf("2. Remove product (STUB)\n");
-        printf("3. View all orders (STUB)\n");
+        printf("1. Add product \n");
+        printf("2. Remove product \n");
+        printf("3. View all orders \n");
         printf("4. Return to Main Menu\n"); 
 
         printf("\nEnter your choice: ");
@@ -215,7 +218,7 @@ void admin_menu() {
     }
 }
 
-
+//--- CUSTOMER MENU ---
 void customer_menu() {
     int choice;
     int running = 1;
@@ -252,21 +255,6 @@ void customer_menu() {
 
 
 
-/*void customer_menu() {
-    printf("\n--- CUSTOMER MENU ---\n");
-    printf("1. View products\n");
-    printf("2. Add product to cart\n");
-    printf("3. Checkout\n");
-    printf("4. Return to Main Menu\n");
-
-    int choice;
-    printf("\nEnter your choice: ");
-    // Temporarily just print the choice and return
-    if (scanf_s("%d", &choice) == 1) {
-        printf("Selected: %d. Returning to main menu...\n", choice);
-    }
-}*/
-
 //---PASSWORD CHECK---
 void admin_login() {
     char input_password[MAX_PASS_LENGHT];
@@ -288,12 +276,9 @@ void admin_login() {
     else {
         printf("\n Incorrect Password. Access denied.\n");
     }
-
-
-
 }
-// --- MAIN ROLE SELECTION MENU ---
 
+// --- MAIN ROLE SELECTION MENU ---
 void display_main_menu() {
     int choice;
     int running = 1;
@@ -335,7 +320,6 @@ void display_main_menu() {
 }
 
 // --- PROGRAM ENTRY POINT ---
-
 int main() {
     display_main_menu();
     return 0;
